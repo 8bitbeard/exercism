@@ -11,7 +11,7 @@ pub fn word_count(words: &str) -> HashMap<String, u32> {
 
     for w in words.iter() {
         let e = w.to_string();
-        if e.chars().all(|x| x.is_alphanumeric()) {
+        if !w.is_empty() {
             *word_count.entry(e).or_insert(0) += 1;
         }
     }
@@ -20,6 +20,20 @@ pub fn word_count(words: &str) -> HashMap<String, u32> {
 }
 
 fn parse_word(word: String) -> String {
-    let word = word.trim();
-    word.to_string()
+    let mut parsed_word = word
+        .trim()
+        .chars()
+        .filter(|x|
+            ('a'..='z').contains(x)
+            || ('A'..='Z').contains(x)
+            || ('0'..='9').contains(x)
+            || *x == '\'')
+        .collect::<String>().to_lowercase();
+
+    if parsed_word.chars().filter(|x| *x == '\'').count() > 1 {
+        let l = parsed_word.chars().count();
+        parsed_word = parsed_word[1..l-1].to_string()
+    }
+
+    parsed_word
 }
