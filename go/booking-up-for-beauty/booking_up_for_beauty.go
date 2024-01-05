@@ -2,7 +2,7 @@ package booking
 
 import (
 	"fmt"
-	"strings"
+	// "strings"
 	"time"
 )
 
@@ -34,13 +34,9 @@ func IsAfternoonAppointment(date string) bool {
 
 // Description returns a formatted string of the appointment time.
 func Description(date string) string {
-	// "You have an appointment on Thursday, July 25, 2019, at 13:45."
-  descriptionTemplate := "You have an appointment on %s, %s, %d, at %d:%d."
 	parsedDate := Schedule(date)
-  formatTemplate := "Monday, January 2, 2006 15:04:00"
-	formattedDateValues := strings.Split(parsedDate.Format(formatTemplate), ", ")
 
-	return fmt.Sprintf(descriptionTemplate, formattedDateValues[0], formattedDateValues[1], parsedDate.Year(), parsedDate.Hour(), parsedDate.Minute())
+  return fmt.Sprintf("You have an appointment on %s", parsedDate.Format("Monday, January 2, 2006, at 15:04."))
 }
 
 // AnniversaryDate returns a Time with this year's anniversary.
