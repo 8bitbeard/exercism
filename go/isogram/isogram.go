@@ -1,21 +1,20 @@
 package isogram
 
 import (
-	"strings"
+	"slices"
+	"unicode"
 )
 
 func IsIsogram(word string) bool {
-  seenStrings := ""
-  word = strings.ReplaceAll(word, " ", "")
-  word = strings.ReplaceAll(word, "-", "")
-  word = strings.ToLower(word)
-  sliceWord := strings.Split(word, "")
-  for _, letter := range sliceWord {
-    if strings.Contains(seenStrings, letter) {
+  seenRunes := []rune("")
+  for _, r := range word {
+    lowerRune := unicode.ToLower(r)
+    if slices.Contains(seenRunes, lowerRune) {
       return false
     }
-    seenStrings += letter
+    if lowerRune != ' ' && lowerRune != '-' {
+      seenRunes = append(seenRunes, lowerRune)
+    }
   }
-
   return true
 }
